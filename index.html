@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>QR Code Generator</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 text-center" style="background-color: #e2e2e2;">
+            <h1>QR Code Generator</h1>
+
+            <div>
+                <p>Enter Text to embed  in QR Code</p>
+                <p>
+                    <textarea name="txt" style="height: 50px; width:350px;" required></textarea>
+                </p>
+                <p>
+                    Image Size:
+                    <select name="size">
+                        <option value="100x100" selected>100x100</option>
+                        <option value="200x200">200x200</option>
+                        <option value="300x300">300x300</option>
+                    </select>
+                </p>
+                <p><input type="submit" value="Generate QR Code" id="qr-gn"></p>
+            </div>
+
+            <div id="qrcode"></div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="jquery.qrcode.min.js"></script>
+    <script>
+        $(function(){
+            $('#qr-gn').click(function(){
+                $('#qrcode').html("");
+                var txt = $.trim($('textarea[name="txt"]').val());
+                if(txt==''){
+                    alert('Please enter text you want to embed in QR code');
+                    return false;
+                }
+                var size = $('select[name="size"]').val();
+                var sizeSplit = size.split('x');
+                var width = sizeSplit[0];
+                var height = sizeSplit[1];
+
+                generateQRcode(width,height,txt);
+                return false;
+            });
+
+            function generateQRcode(width,height,text){
+                $('#qrcode').qrcode({width: width,height: height,text:text});
+            }
+        })
+    </script>
+</body>
+</html>
